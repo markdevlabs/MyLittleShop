@@ -21,6 +21,11 @@ def signup() -> None:
         except Exception as e:
             print(f"Error during sign up: {e}")
 
+
+def question_to_user() -> None:
+    question: str = input('To create new product enter(create new), to exit(exit): ').strip().lower()
+    return question
+
 def signin() -> bool:
     email: str = input('Enter your email: ').strip()
     password: str = input('Enter your password: ').strip()
@@ -32,7 +37,32 @@ def signin() -> bool:
 
         if user:
             print(f"Welcome back, {user[0]}!")
+            foo = question_to_user()
+            print(foo)
             return True
         else:
-            print("Invalid email or password")
+            print("Invalid email or password, try again")
+            signin()
             return False
+
+
+def create_credit_card() -> None:
+    print('Creating new credit card...')
+    number: int = int(input('Write credit card number: '))
+    pincode: int = int(input('Write credit card pincode: '))
+    print('Credit card successfully created!')
+
+
+
+def create_product() -> None:
+    name: str = input('Write your name: ')
+    product: str = input('Write product name: ')
+    product_price: float = float(input('Write product price: '))
+    with get_connection() as conn:
+        cur = conn.cursor()
+
+        cur.execute("""
+        INSERT INTO seller_info (seller_name, product_name, price)
+        VALUES (?, ?, ?)
+        """, (name, product, product_price))
+

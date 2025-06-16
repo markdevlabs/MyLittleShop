@@ -19,8 +19,8 @@ def create_tables() -> None:
 
         cur.execute("""
             CREATE TABLE IF NOT EXISTS seller_info(
-                name TEXT,
-                product TEXT,
+                seller_name TEXT,
+                product_name TEXT,
                 price INTEGER,
                 id INTEGER PRIMARY KEY AUTOINCREMENT
             )
@@ -36,3 +36,5 @@ def create_tables() -> None:
                 id INTEGER PRIMARY KEY AUTOINCREMENT
             )
         """)
+
+
