@@ -1,6 +1,7 @@
 from typing import Optional
 from db import get_connection
 
+
 def signup() -> None:
     print("Signing up a new user...")
 
@@ -22,9 +23,27 @@ def signup() -> None:
             print(f"Error during sign up: {e}")
 
 
-def question_to_user() -> None:
-    question: str = input('To create new product enter(create new), to exit(exit): ').strip().lower()
-    return question
+
+def choose() -> None:
+
+
+    question: str = input('To create new product enter(create new), to exit(exit), to search(write product name): ').strip().lower()
+
+
+    if question == 'create new':
+        create_product()
+
+    elif question == 'exit':
+        print('Bye!')
+
+    elif question == 'search':
+        search_product()
+    else:
+        pass
+
+    while True:
+        choose()
+
 
 def signin() -> bool:
     email: str = input('Enter your email: ').strip()
@@ -37,8 +56,7 @@ def signin() -> bool:
 
         if user:
             print(f"Welcome back, {user[0]}!")
-            foo = question_to_user()
-            print(foo)
+            choose()
             return True
         else:
             print("Invalid email or password, try again")
@@ -54,10 +72,13 @@ def create_credit_card() -> None:
 
 
 
-def create_product() -> None:
-    name: str = input('Write your name: ')
-    product: str = input('Write product name: ')
-    product_price: float = float(input('Write product price: '))
+
+def create_product() -> (str, float):
+    name: str = str(input('Write your name: ').strip())
+    product = str(input('Write product name: ').strip())
+    product_price: float = float(input('Write product price: ').strip())
+
+
     with get_connection() as conn:
         cur = conn.cursor()
 
@@ -65,4 +86,19 @@ def create_product() -> None:
         INSERT INTO seller_info (seller_name, product_name, price)
         VALUES (?, ?, ?)
         """, (name, product, product_price))
+
+
+
+
+def search_product() -> None:
+    with get_connection() as conn:
+        cur = conn.cursor()
+
+        search: str = input('Write product name: ').strip().lower()
+
+        cur.execute("""SELECT seller_name, product_name, price FROM seller_info
+        WHERE product_name = ?""", search)
+
+        print(cur.fetchall())
+
 

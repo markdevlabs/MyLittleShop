@@ -1,5 +1,5 @@
 from db import create_tables
-from user import signup, signin, create_product
+from user import signup, signin, choose, create_product, search_product
 
 def greet() -> None:
     print('Welcome to the online shop!')
@@ -20,19 +20,8 @@ def main() -> None:
         print("Invalid choice, try again!")
         main()
 
-
-    question: str = input('To create new product enter(create new), to exit(exit): ').strip().lower()
-
-
-    if question == 'create new':
-        create_product()
-
-    elif question == 'exit':
-        print('Bye!')
-    else:
-        pass
-
-
+    while True:
+        choose()
 
 if __name__ == '__main__':
     main()
