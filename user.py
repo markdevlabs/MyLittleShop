@@ -24,7 +24,7 @@ def signup() -> None:
 
 
 
-def choose() -> None:
+def choose() -> (None, bool):
 
 
     question: str = input('To create new product enter(create new), to exit(exit), to search(write product name): ').strip().lower()
@@ -35,10 +35,13 @@ def choose() -> None:
 
     elif question == 'exit':
         print('Bye!')
+        return False
+
 
     elif question == 'search':
         search_product()
     else:
+        print('Incorrect command, try again')
         pass
 
     while True:
@@ -64,19 +67,12 @@ def signin() -> bool:
             return False
 
 
-def create_credit_card() -> None:
-    print('Creating new credit card...')
-    number: int = int(input('Write credit card number: '))
-    pincode: int = int(input('Write credit card pincode: '))
-    print('Credit card successfully created!')
-
-
-
 
 def create_product() -> (str, float):
     name: str = str(input('Write your name: ').strip())
     product = str(input('Write product name: ').strip())
     product_price: float = float(input('Write product price: ').strip())
+    print('Product successfully created!')
 
 
     with get_connection() as conn:
@@ -89,7 +85,6 @@ def create_product() -> (str, float):
 
 
 
-
 def search_product() -> None:
     with get_connection() as conn:
         cur = conn.cursor()
@@ -97,8 +92,5 @@ def search_product() -> None:
         search: str = input('Write product name: ').strip().lower()
 
         cur.execute("""SELECT seller_name, product_name, price FROM seller_info
-        WHERE product_name = ?""", search)
-
+        WHERE product_name = ?""", [search])
         print(cur.fetchall())
-
-
