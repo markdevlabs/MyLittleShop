@@ -1,9 +1,6 @@
 from db import create_tables
 from user import signup, signin, choose, create_product, search_product
 
-def greet() -> None:
-    print('Welcome to the online shop!')
-    print("You can search/create your product/delete your product")
 
 
 def main() -> None:
@@ -20,8 +17,12 @@ def main() -> None:
         print("Invalid choice, try again!")
         main()
 
+
+
     while True:
         choose()
+
+
 
 if __name__ == '__main__':
     main()

@@ -27,16 +27,19 @@ def signup() -> None:
 def choose() -> (None, bool):
 
 
-    question: str = input('To create new product enter(create new), to exit(exit), to search(write product name): ').strip().lower()
+    question: str = input('To create new product enter(create new)/ to exit(exit)/ to search(write product name)/ to delete(delete): ').strip().lower()
 
 
     if question == 'create new':
         create_product()
 
+
     elif question == 'exit':
         print('Bye!')
         return False
 
+    elif question == 'delete':
+        delete_product()
 
     elif question == 'search':
         search_product()
@@ -44,8 +47,6 @@ def choose() -> (None, bool):
         print('Incorrect command, try again')
         pass
 
-    while True:
-        choose()
 
 
 def signin() -> bool:
@@ -91,6 +92,25 @@ def search_product() -> None:
 
         search: str = input('Write product name: ').strip().lower()
 
-        cur.execute("""SELECT seller_name, product_name, price FROM seller_info
+        cur.execute("""SELECT id, seller_name, product_name, price FROM seller_info
         WHERE product_name = ?""", [search])
-        print(cur.fetchall())
+
+        print_columns = cur.fetchall()
+
+        for info in print_columns:
+            print(f"{info}\n")
+
+
+
+def delete_product():
+    with (get_connection() as conn):
+        cur = conn.cursor()
+
+        delete_process_1 = input('Write product name: ').strip().lower()
+
+        delete_process_2 = input('Write product id: ').strip().lower()
+
+
+
+        cur.execute('''DELETE id seller_name product_name price FROM seller_info
+        WHERE id = ? AND product_name = ?''', [delete_process_1, delete_process_2])
