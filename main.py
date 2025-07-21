@@ -18,7 +18,6 @@ def main() -> None:
         main()
 
 
-
     while True:
         choose()
 
