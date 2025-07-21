@@ -27,7 +27,7 @@ def signup() -> None:
 def choose() -> (None, bool):
 
 
-    question: str = input('To create new product enter(create new)/ to exit(exit)/ to search(write product name)/ to delete(delete): ').strip().lower()
+    question: str = input(''''To create new product enter(create new)/ to exit(exit)/ to search(write product name)/ to delete(delete): ''').strip().lower()
 
 
     if question == 'create new':
@@ -106,11 +106,12 @@ def delete_product():
     with (get_connection() as conn):
         cur = conn.cursor()
 
-        delete_process_1 = input('Write product name: ').strip().lower()
+        delete_process_1 = input('Write product id: ').strip().lower()
 
-        delete_process_2 = input('Write product id: ').strip().lower()
+        delete_process_2 = input('Write product name: ').strip().lower()
 
 
 
-        cur.execute('''DELETE id seller_name product_name price FROM seller_info
-        WHERE id = ? AND product_name = ?''', [delete_process_1, delete_process_2])
+        cur.execute("""SELECT seller_name, product_name, price, id FROM seller_info""")
+
+        cur.execute('''DELETE FROM seller_info WHERE id = ? AND product_name = ?''', [delete_process_1, delete_process_2])
