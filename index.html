@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
     <h1>Welcome to My little shop</h1>
 
-    <p style="text-align: left;">
-                <img src="/images/forest1.jpg"
-                    alt="There's a picture"
-                    width="200" height="auto">
+    <p>
+    <img src="/images/flower.jpg"
+         alt="Smth went wrong!"
+         width="350" height="200">
+
+    <img src="/images/forest1.jpg"
+         alt="Smth went wrong!"
+         width="350" height="200">
+
     </p>
 
-    <button type="button" onclick="myFunction()">i am a button</button>
+    <button id="myButton">Click on me!</button>
+
+    <p id="demo"></p>
 
     <script>
-        function myFunction() {
-            alert('hello world');
+        var func = document.getElementById("myButton");
+
+        func.addEventListener("click", MyFunction);
+
+        function MyFunction() {
+            document.getElementById('demo').innerHTML += "Bought for 10.99$<br>"
         }
     </script>
+
 
 </body>
 </html>
